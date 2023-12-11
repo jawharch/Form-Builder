@@ -108,20 +108,27 @@ const Form = () => {
       </label>
       <label>
         Female
-        <input type="radio" value="female" {...register('gender')} defaultChecked={form.watch('gender') === 'male'} />
+        <input type="radio" value="female" {...register('gender')} defaultChecked={form.watch('gender') === 'female'} />
       </label>
       </div>
+     
+      
       <div className='form-control'>
       <label htmlFor='country'>
         Select your country:
         </label>
 
         <select {...register('country')} defaultValue={form.watch('country')}>
-          <option value="USA">United States</option>
+
+          <option value="TUN">Tunisia</option>
+          <option value="FRA">France</option>
           <option value="CAN">Canada</option>
-          <option value="UK">United Kingdom</option>
+          <option >US</option>
           
         </select>
+        {
+            console.log(form.watch('country'))
+        }
       
 
       </div>
