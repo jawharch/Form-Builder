@@ -2,6 +2,14 @@
 import {useForm,useFieldArray} from 'react-hook-form'
 import { DevTool } from "@hookform/devtools";
 
+
+import MenuItem from '@mui/material/MenuItem';
+
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useEffect, useState } from 'react';
+
+
 const Form = () => {
     const form=useForm(
         {
@@ -14,9 +22,9 @@ const Form = () => {
                 
                 gender:"male",
                 country:"Tunisia",
-                hobbies:"Musique",
-                socials:[
-                    {social:""}
+                
+                hobbies:[
+                    {hobbie:""}
                 ],
 
                 
@@ -25,15 +33,21 @@ const Form = () => {
             
         }
     )
-    const {register,control,handleSubmit,formState}=form
-    const {errors}=formState
+    const {register,control,handleSubmit,formState,getValues,setValue,reset}=form
+    const {errors,isValid,isDirty}=formState
     const {fields,append,remove}=useFieldArray(
         {
-          name:'socials',control
+          name:'hobbies',control
         }
       )
+      const [selectedCountry, setSelectedCountry] = useState('TUN');
+      useEffect(() => {
+        setValue('country', selectedCountry);
+      }, [setValue, selectedCountry]);
+    
+      
   return (
-    <div>
+    <div >
         <h1>Welcome</h1>
         <form onSubmit={handleSubmit() } noValidate> 
         
@@ -113,38 +127,50 @@ const Form = () => {
       </div>
      
       
-      <div className='form-control'>
+      <div className='form-control-check'>
       <label htmlFor='country'>
-        Select your country:
+       Country
         </label>
 
-        <select {...register('country')} defaultValue={form.watch('country')}>
-
-          <option value="TUN">Tunisia</option>
-          <option value="FRA">France</option>
-          <option value="CAN">Canada</option>
-          <option >US</option>
-          
-        </select>
+        <FormControl sx={{ m: 1, minWidth: 100 }}>
+        <Select
         {
-            console.log(form.watch('country'))
+            ...register('country')
         }
+        value={form.watch('country')}
+        style={{color:'white'}}
+        onChange={(e) => setSelectedCountry(e.target.value)}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          
+          <MenuItem value="Tunisia" >Tunisia</MenuItem>
+          <MenuItem value="France">France</MenuItem>
+          <MenuItem value="Canada">Canada</MenuItem>
+        </Select>
+        
+      </FormControl>
+        
       
 
       </div>
       
             <div>
-                <label >Socials</label>
+                <label >Hobbies</label>
                 <div>
             {
               fields.map((field,index)=>
               {
                 return(
                 <div className='form-control' key={field.id}>
-                  <input type='text' {...register(`socials[${index}].social`)}/>
+                  <input type='text' {...register(`hobbies[${index}].hobbie`,{
+                    required:{
+                        value:true, message:"One hobbie  is required."
+                    }
+                  })}/>
                   {
                     index>0 &&(
-                      <button type='button' onClick={()=>remove(index)}>Remove</button>
+                      <button type='button' className='button1' onClick={()=>remove(index)}>Remove</button>
                     )
 
                   }
@@ -153,10 +179,22 @@ const Form = () => {
               })
 
             }
-            <button type='button' onClick={()=>append({number:""})}>Add social</button>
+            <button type='button' className='button' onClick={()=>append({hobbie:""})}>Add Hobbie</button>
           </div>
             </div>
+            {
+                console.log(getValues())
+            }
+            <div>
+                
+            </div>
+            <div className='buttons' >
+            <button type='submit'  className='submitbutton' disabled={!isDirty ||  !isValid}>Submit</button>
+            
 
+
+            </div>
+           
 
         </form>
 

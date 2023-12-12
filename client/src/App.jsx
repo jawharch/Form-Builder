@@ -1,13 +1,15 @@
 
 import './App.css'
-import Form from './Form'
+import Dashboard from './components/Dashboard'
+import Form from './components/Form'
+import FormBuilder from './components/FormBuilder'
 
 function App() {
   
 
   return (
     <div>
-      <Form/>
+      <Dashboard/>
 
     </div>
   )
