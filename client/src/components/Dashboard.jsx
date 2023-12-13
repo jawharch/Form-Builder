@@ -10,6 +10,8 @@ import {Modal,Button,Form} from 'react-bootstrap'
 const Dashboard = () => {
     const [formBuilders, setFormBuilders] = useState([]);
     const [show, setShow] = useState(false);
+    const [formName, setFormName] = useState('');
+    const [selectedColor, setSelectedColor] = useState('#ffffff');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -17,54 +19,67 @@ const Dashboard = () => {
     const createNewFormBuilder = () => {
         const newForm = {
             id: formBuilders.length + 1,
-            name: `Form ${formBuilders.length + 1}`,
+            name: formName,
+            backgroundColor: selectedColor,
             fields: [],
         };
 
         setFormBuilders([...formBuilders, <FormBuilder key={formBuilders.length} formElements={newForm} />]);
+        setSelectedColor('#ffffff'); 
+        handleClose();
+        setFormName('')
     };
+  
+
+ 
 
     return (
         <>
         
 
         
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant="primary" onClick={handleShow} style={{display:'none'}}>
         Launch demo modal
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+                <Modal.Header closeButton>
+                    <Modal.Title>Create a New Form</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formName">
+                            <Form.Label>Form Name</Form.Label>
+                            
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter form name"
+                                value={formName}
+                                onChange={(e) => setFormName(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="backgroundColor">
+                            <Form.Label>Form Color</Form.Label>
+                            <Form.Control
+                                type="color"
+                                value={selectedColor}
+                                onChange={(e)=>setSelectedColor(e.target.value)}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button disabled={!formName} variant="primary"  onClick={() => {
+                            handleClose();
+                            createNewFormBuilder();
+                        }}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
       
         
         <DndProvider backend={HTML5Backend}>
@@ -85,15 +100,20 @@ const Dashboard = () => {
                    
 
                     <div className="form-builders-container">
-                        <h2 style={{textAlign:'center',fontWeight:'bold',fontSize:'40px'}}>Form Builder</h2>
+                        <div className='form-builders-header'>
+                        <h2 style={{textAlign:'center',fontWeight:'bold',fontSize:'40px',color:'black'}}>Form Builder</h2>
+                        <button className='create-button' onClick={()=>setShow(true)}>Add Form</button>
+
+                        </div>
+                        
                         <div className="form-builder-list" >
 
                         
                         {formBuilders.map((formBuilder, index) => (
-                            <div className="form-builder-item" key={index}>{formBuilder}</div>
+                            <div className="form-builder-item"  style={{backgroundColor:formBuilder.props.formElements.backgroundColor}}  key={index}>{formBuilder}</div>
                         ))}
                         </div>
-                        <button className='create-button' onClick={createNewFormBuilder}>Create Form</button>
+                        
                     </div>
                 </div>
             </div>

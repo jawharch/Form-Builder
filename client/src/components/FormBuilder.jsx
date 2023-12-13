@@ -24,8 +24,10 @@ const FormBuilder = ({formElements}) => {
                 
                 {formFields.map((field, index) => (
                     <div key={index}>{field}</div>
+                    
                 ))}
             </div>
+            {console.log(formFields)}
         </div>
     );
 };

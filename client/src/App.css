@@ -111,3 +111,10 @@
   border-radius: 6px;
   background-color:  #d0e4fe;
 }
+.form-builders-header
+{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 20px;
+}
