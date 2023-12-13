@@ -6,7 +6,7 @@ const FormBuilder = ({formElements}) => {
     const [formFields, setFormFields] = useState([]);
 
     const [, drop] = useDrop({
-        accept: ['text', 'checkbox', 'radio'], 
+        accept: ['text', 'checkbox', 'radio','number','password','email','select','option','date'], 
         drop(item) {
             addField(item.type); 
         },
@@ -19,7 +19,7 @@ const FormBuilder = ({formElements}) => {
 
     return (
         <div className="form-builder-canvas" ref={drop}>
-            <h2>Form {formElements.id}</h2>
+            <h2> {formElements.name}</h2>
             <div className="form-fields-container">
                 
                 {formFields.map((field, index) => (
