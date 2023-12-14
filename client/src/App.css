@@ -118,3 +118,48 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.test
+{
+  display: inline-block;
+  background-color: black;
+}
+
+.form-fields-container {
+  display: flex;
+  flex-direction: column;
+}
+.label
+{
+  margin-bottom: 8px;
+  
+  display: block;
+}
+.input
+{
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: block;
+}
+.radio
+{
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.submit-button-form {
+  margin-top: 50px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button-form:hover {
+  background-color: #0056b3;
+}

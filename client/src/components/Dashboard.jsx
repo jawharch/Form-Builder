@@ -53,6 +53,7 @@ const Dashboard = () => {
                             
                             <Form.Control
                                 type="text"
+                                
                                 placeholder="Enter form name"
                                 value={formName}
                                 onChange={(e) => setFormName(e.target.value)}
@@ -94,6 +95,10 @@ const Dashboard = () => {
                     <DashboardLabel label="Number Field" type="number" />
                     <DashboardLabel label="Select" type="select" />
                     <DashboardLabel label="Date" type="date" />
+                    <DashboardLabel label="Submit Button" type="button" />
+
+                    
+                    
                 </div>
 
                 <div className="right-section">
@@ -101,7 +106,7 @@ const Dashboard = () => {
 
                     <div className="form-builders-container">
                         <div className='form-builders-header'>
-                        <h2 style={{textAlign:'center',fontWeight:'bold',fontSize:'40px',color:'black'}}>Form Builder</h2>
+                        <h2 style={{textAlign:'center',fontWeight:'bold',fontSize:'40px',color:'black'}}>Forms Builder</h2>
                         <button className='create-button' onClick={()=>setShow(true)}>Add Form</button>
 
                         </div>
