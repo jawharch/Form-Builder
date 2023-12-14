@@ -28,7 +28,15 @@ const Dashboard = () => {
         setSelectedColor('#ffffff'); 
         handleClose();
         setFormName('')
-    };
+    }
+    const handleUpdate=()=>
+    {
+
+    }
+    const handleDelete=()=>
+    {
+
+    }
   
 
  
@@ -115,8 +123,15 @@ const Dashboard = () => {
 
                         
                         {formBuilders.map((formBuilder, index) => (
-                            <div className="form-builder-item"  style={{backgroundColor:formBuilder.props.formElements.backgroundColor}}  key={index}>{formBuilder}</div>
+                            <div className="form-builder-item"  style={{backgroundColor:formBuilder.props.formElements.backgroundColor}}  key={index}>{formBuilder}
+                            <div className='button-container' >
+                            <button className="update-button" onClick={() => handleUpdate(index)}>Update</button>
+                            <button className="delete-button" onClick={() => handleDelete(index)}>Delete</button>
+                        </div>
+                            </div>
+                            
                         ))}
+                        
                         </div>
                         
                     </div>

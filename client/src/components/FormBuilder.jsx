@@ -102,6 +102,14 @@ const FormBuilder = ({formElements}) => {
     const handleSave = () => {
         addField();
     };
+    const handleDelete=()=>
+    {
+
+    }
+    const handleUpdate=()=>
+    {
+
+    }
 
 
     return (
@@ -123,21 +131,31 @@ const FormBuilder = ({formElements}) => {
                                     placeholder={field.placeholder}
                                     {
                                         ...register(field.id,{
+                                           
                                             required:{
                                                 value: true,
                 message: field.condition
-                                            }
+                                            },
+                                            ...(field.type === 'email' && {
+                                                pattern: {
+                                                  value: /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                                  message: 'Invalid email format'
+                                                }
+                                              })
+                                            
                                         })
                                     }
+                                    
                                 />
                                 <p className='error'>{errors[field.id]?.message}</p>
+                                
                                 
                             </div>
                         )}
                         
                     </div>
                 ))}
-                <button className='submit-button-form' type='submit'>Submit</button>
+                <button className='submit-button-form' type='submit'  disabled={!isDirty ||  !isValid} >Submit</button>
             </form>
             <DevTool control={control}/>
             {console.log(formFields)}
