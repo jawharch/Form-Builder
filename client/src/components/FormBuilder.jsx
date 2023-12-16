@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import Field from './Field'; 
 import { Modal, Button, Form } from 'react-bootstrap';
@@ -24,39 +24,70 @@ const FormBuilder = ({formElements}) => {
         defaultValues,
         mode:'all' 
     });
-    const {register,control,handleSubmit,formState,getValues,setValue,reset}=form
+    const {register,control,handleSubmit,formState,getValues}=form
     const {errors,isValid,isDirty}=formState
-    const onSubmit = (data) => {
-        console.log(data); }
-
+ 
 
     const [, drop] = useDrop({
         accept: ['text', 'checkbox', 'radio','number','password','email','select','option','date','button'], 
         drop(item) {
             if (item.type === 'checkbox' || item.type === 'radio') {
                 setshowModalChechbox(true);
-                setDraggedFieldDetails(item.type);
-            }
-            else if(item.type === 'select')
+                setDraggedFieldDetails(item.type);}
+            else  if(item.type === 'date')
             {
-                setshowModalSelect(true);
+        
                 setDraggedFieldDetails(item.type);
+               
+                 {
+
+                    const newField = (
+                        <div key={formFields.length}>
+                       
+                          <input
+                            className="input"
+                            type={item.type}
+                            id={`date_${formFields.length}`}
+                            {...register(`date_${formFields.length}`, {
+                              required: {
+                                value: true,
+                                message: 'Date is required',
+                              },
+                           
+                            })}
+                          />
+                          <p className="error">{errors[`date_${formFields.length}`]?.message}</p>
+                        </div>
+                      );
+                      setFormFields([...formFields, newField]);
+                      
+                 
                 
-
+                }
+         
             }
-           
+            else
+            {
 
-            
-             else {
                 setDraggedFieldDetails(item.type);
                 setshowModalInputs(true)
+
             }
+            
+            
+
+
+
+
+         
         },
     });
+    
 
     const addField = (type) => {
-        if (type === 'checkbox' || type === 'radio') {
-            const newField = <Field key={formFields.length} type={type} />
+        
+        if (type === 'checkbox' || type === 'radio' || type==='date')  {
+            const newField = <Field key={formFields.length} type={type} {...register(`field_${formFields.length}`)} />
             setFormFields([...formFields, newField])
         } else {
             const newField = {
@@ -102,14 +133,10 @@ const FormBuilder = ({formElements}) => {
     const handleSave = () => {
         addField();
     };
-    const handleDelete=()=>
-    {
-
+    const onSubmit = (data) => {
+     console.log(getValues())
     }
-    const handleUpdate=()=>
-    {
-
-    }
+    
 
 
     return (
@@ -129,6 +156,7 @@ const FormBuilder = ({formElements}) => {
                                     type={field.type}
                                     id={field.id}
                                     placeholder={field.placeholder}
+                                    ref={register}
                                     {
                                         ...register(field.id,{
                                            
@@ -158,7 +186,7 @@ const FormBuilder = ({formElements}) => {
                 <button className='submit-button-form' type='submit'  disabled={!isDirty ||  !isValid} >Submit</button>
             </form>
             <DevTool control={control}/>
-            {console.log(formFields)}
+            
 
             <Modal show={showModalInputs} onHide={handleClose}>
                 <Modal.Header closeButton>

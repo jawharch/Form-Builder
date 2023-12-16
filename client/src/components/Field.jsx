@@ -39,7 +39,7 @@ const Field = ({ type, options,isDragging,  ...props }) => {
             );
         
         default:
-            return null;
+            return null
     }
 };
 
